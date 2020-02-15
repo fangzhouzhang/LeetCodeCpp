@@ -2,6 +2,10 @@
 // Created by Fangzhou Zhang on 2020/2/15.
 //
 class Solution {
+private:
+    void addSpace(string& s, int n) {
+        for (int i = 0; i < n; i++) s.push_back(' ');
+    }
 public:
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
         vector<string> res;
@@ -24,17 +28,17 @@ public:
                     str += ' ';
                     str += words[k];
                 }
-                for (int l = 0; l < maxWidth - chars; l++) str.push_back(' ');
+                addSpace(str, maxWidth - chars);
             } else {
                 int min_avg_space = (maxWidth - chars) / num_of_word_gap + 1;
                 int num_of_gaps_take_more_space = (maxWidth - chars) % num_of_word_gap;
                 int k = idx + 1;
                 for (int i = 0; i < num_of_gaps_take_more_space; i++) {
-                    for (int l = 0; l < min_avg_space + 1; l++) str.push_back(' ');
+                    addSpace(str, min_avg_space + 1);
                     str += words[k++];
                 }
                 while (k < next) {
-                    for (int l = 0; l < min_avg_space; l++) str.push_back(' ');
+                    addSpace(str, min_avg_space);
                     str += words[k++];
                 }
             }
