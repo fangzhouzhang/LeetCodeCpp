@@ -37,9 +37,10 @@ private:
         cur->word = sentence;
         cur->times += times;
         for (int i = 0; i < paths.size(); i++) {
-            if (find(paths[i]->hot.begin(), paths[i]->hot.end(), cur) == paths[i]->hot.end()) paths[i]->hot.push_back(cur);
-            sort(paths[i]->hot.begin(), paths[i]->hot.end(), cmp);
-            if (paths[i]->hot.size() > 3) paths[i]->hot.pop_back();
+            vector<TrieNode*>& h = paths[i]->hot;
+            if (find(h.begin(), h.end(), cur) == h.end()) h.push_back(cur);
+            sort(h.begin(), h.end(), cmp);
+            if (h.size() > 3) h.pop_back();
         }
     }
 
