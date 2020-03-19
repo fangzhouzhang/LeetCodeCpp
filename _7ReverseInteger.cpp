@@ -4,7 +4,7 @@
 class Solution {
 public:
     int reverse(int x1) {
-        bool neg = (x1 >= 0) ? false : true;
+        bool neg = x1 < 0;
         long x = abs((long)x1);
         long r = 0;
         while (x > 0) {
