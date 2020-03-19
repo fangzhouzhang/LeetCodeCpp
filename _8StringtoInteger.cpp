@@ -1,6 +1,7 @@
 //
 // Created by Fangzhou Zhang on 2020/3/19.
 //
+
 class Solution {
 public:
     int myAtoi(string str) {
