@@ -12,4 +12,23 @@ public:
         first->next = new_head;
         return second;
     }
+
+    ListNode* iter_swapPairs(ListNode* head) {
+            if (head == NULL || head->next == NULL) return head;
+            ListNode *dummy = new ListNode(-1);
+            dummy->next = head;
+            ListNode *pre = dummy;
+            while (head != NULL && head->next != NULL) {
+                    ListNode *first = head;
+                    ListNode *second = head->next;
+
+                    pre->next = second;
+                    first->next = second->next;
+                    second->next = first;
+
+                    pre = first;
+                    head = first->next;
+            }
+            return dummy->next;
+    }
 };
