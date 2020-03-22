@@ -1,0 +1,30 @@
+//
+// Created by Fangzhou Zhang on 2020/3/22.
+//
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> tmp;
+        sort(candidates.begin(), candidates.end());
+        if (candidates.size() == 0) return res;
+        function<void(int, int)> dfs = [&](int idx, int remain){
+            if (remain == 0 && idx <= candidates.size()) {
+                res.push_back(tmp);
+                return;
+            }
+            if (idx == candidates.size() || remain <= 0) {
+                return;
+            }
+
+            tmp.push_back(candidates[idx]);
+            dfs(idx + 1, remain - candidates[idx]);
+            tmp.pop_back();
+
+            while (idx + 1 < candidates.size() && candidates[idx] == candidates[idx + 1]) idx++;
+            dfs(idx + 1, remain);
+        };
+        dfs(0, target);
+        return res;
+    }
+};
