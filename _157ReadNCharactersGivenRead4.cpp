@@ -13,22 +13,20 @@ public:
      * @param n   Number of characters to read
      * @return    The number of actual characters read
      */
+    char buff[4];
     int read(char *buf, int n) {
-        char buff[4];
-        int res = 0, remain = n;
-        while (1) {
-            int num_read = read4(buff);
-
-            if (num_read == 0 || remain == 0) break;
-            int iter = min(num_read, remain);
-            for (int i = 0; i < iter; i++) {
-                *buf = buff[i];
-                buf++;
-                res++;
+        int res = 0;
+        int remain = n;
+        while (remain > 0) {
+            int buff_size = read4(buff);
+            if (buff_size == 0) break;
+            int buff_ptr = 0;
+            while (buff_ptr < buff_size && remain > 0) {
+                *buf++ = buff[buff_ptr++];
                 remain--;
+                res++;
             }
         }
-
         return res;
     }
 
