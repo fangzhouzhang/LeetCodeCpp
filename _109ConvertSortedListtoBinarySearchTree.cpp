@@ -4,22 +4,20 @@
 class Solution {
 public:
     TreeNode* sortedListToBST(ListNode* head) {
-        if (NULL == head) return (TreeNode *)NULL;
-        vector<int> vals;
-        while (NULL != head) {
-            vals.push_back(head->val);
-            head = head->next;
+        if (NULL == head) return NULL;
+        if (NULL == head->next) return new TreeNode(head->val);
+        ListNode *pre = NULL;
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while (fast != NULL && fast->next != NULL) {
+            pre = slow;
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        return dfs(vals, 0, vals.size() - 1);
-    }
-
-    TreeNode * dfs(vector<int> vals, int start, int end) {
-        if (start > end) return (TreeNode *)NULL;
-        if (start == end) return new TreeNode(vals[start]);
-        int mid = start + (end - start) / 2;
-        TreeNode *root = new TreeNode(vals[mid]);
-        root->left = dfs(vals, start, mid - 1);
-        root->right = dfs(vals, mid + 1, end);
+        pre->next = NULL;
+        TreeNode *root = new TreeNode(slow->val);
+        root->left = sortedListToBST(head);
+        root->right = sortedListToBST(slow->next);
         return root;
     }
 };
