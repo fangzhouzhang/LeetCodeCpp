@@ -4,7 +4,7 @@
 class Solution {
 public:
     string res;
-    string longestDiverseString(int a, int b, int c) {
+    string longestDiverseStringDFS(int a, int b, int c) {
         vector<vector<vector<vector<int>>>> dp(3, vector<vector<vector<int>>>(a + 1, vector<vector<int>>(b + 1, vector<int>(c + 1, -1))));
         string tmp;
         int d = dfs(a, b, c, tmp,dp, 0);
@@ -64,5 +64,34 @@ public:
         }
 
         return dp[cur][a][b][c] = ret;
+    }
+
+    string longestDiverseString(int a, int b, int c) {
+        priority_queue<pair<char, int>, vector<pair<char, int>>, cmp> pq;
+        if (a > 0) pq.push(make_pair('a', a));
+        if (b > 0) pq.push(make_pair('b', b));
+        if (c > 0) pq.push(make_pair('c', c));
+        bool end = false;
+        while (!end && !pq.empty()) {
+            pair<char, int> cur = pq.top();
+            pq.pop();
+            int n = res.size();
+            if (res.size() > 1 && res[n - 1] == res[n - 2] && res[n - 1] == cur.first) {
+                if (pq.size() > 0) {
+                    pair<char, int> another = pq.top();
+                    pq.pop();
+
+                    res.push_back(another.first);
+                    another.second--;
+                    if (another.second > 0) pq.push(another);
+                    if (cur.second > 0) pq.push(cur);
+                } else end = true;
+            } else {
+                res.push_back(cur.first);
+                cur.second--;
+                if (cur.second > 0) pq.push(cur);
+            }
+        }
+        return res;
     }
 };
