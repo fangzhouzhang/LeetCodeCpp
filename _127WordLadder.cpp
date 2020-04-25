@@ -9,7 +9,6 @@ public:
         set.insert(beginWord);
         if (set.find(endWord) == set.end()) return 0;
 
-        unordered_map<string, unordered_set<string>> map;
         int cnt = 2;
         unordered_set<string> q1;
         unordered_set<string> q2;
@@ -37,8 +36,6 @@ public:
                             return cnt;
                         }
                         if (set.find(s1) == set.end()) continue;
-                        map[s].insert(s1);
-                        map[s1].insert(s);
                         if (dedup.find(s1) == dedup.end()) {
                             dedup.insert(s1);
                             tmp.insert(s1);
